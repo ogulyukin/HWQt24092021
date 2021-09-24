@@ -55,7 +55,9 @@ int loaderWriter::writeToSqlite(QString name, QString company, int age, QSqlData
                       + name + "', '" + company + "', '" + QString::number(age) + "')";
         if(query.exec(command))
         {
-            return query.lastInsertId().toInt();
+            int result = query.lastInsertId().toInt();
+            db->close();
+            return result;
         }
         qDebug() << "Error: " << query.lastError().text();
 
